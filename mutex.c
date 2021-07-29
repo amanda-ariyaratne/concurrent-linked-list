@@ -222,7 +222,9 @@ int main(int argc, char *argv[])
     }
     std = sqrt(sqrd_error_sum/(iterations-1));
 
-    printf("MTX avg: %f std: %f", average, std);
+    printf("MUT avg: %f std: %f \n", average, std);
+
+    printf("n: %f\n", (100*1.96*std)/(5*average));
 
     return 0;
 }

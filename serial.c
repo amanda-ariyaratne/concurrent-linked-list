@@ -191,7 +191,9 @@ int main(int argc, char *argv[])
     }
     std = sqrt(sqrd_error_sum/(iterations-1));
 
-    printf("SRL avg: %f std: %f", average, std);
+    printf("SRL avg: %f std: %f \n", average, std);
+
+    printf("n: %f\n", pow((100*1.96*std)/(5*average),2));
 
     return 0;
 }
