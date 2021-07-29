@@ -24,7 +24,7 @@ int operations[m];
 int thread_count, iterations;
 double p_member, p_insert, p_delete;
 
-pthread_mutex_t list_mutex = PTHREAD_MUTEX_INITIALIZER;;
+pthread_mutex_t list_mutex;
 
 int Member(int value, struct list_node_s* head_p){
     struct list_node_s* curr_p = head_p;
@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
     p_delete = (double) atof(argv[3]);
 
     double execution_times[iterations];
-    double average;
+    double average=0;
     double std=0;
     double total_exe_times=0;
     double sqrd_error_sum=0;
@@ -176,6 +176,8 @@ int main(int argc, char *argv[])
     while (iter<iterations){
         ll_head = NULL;
         srand(time(0));
+
+        pthread_mutex_init(&list_mutex, NULL);
 
         int i = 0;
         while (i < n){            
@@ -208,6 +210,8 @@ int main(int argc, char *argv[])
 
         clock_gettime(CLOCK_REALTIME, &finish);
         double time_spent = (finish.tv_sec - start.tv_sec) + ((finish.tv_nsec - start.tv_nsec) / 1000000000.0);
+
+        // printf("round: %d time: %f \n", iter, time_spent);
 
         total_exe_times+=time_spent;
         execution_times[iter]=time_spent;

@@ -23,7 +23,7 @@ int operations[m];
 int thread_count, iterations;
 double p_member, p_insert, p_delete;
 
-pthread_rwlock_t rw_lock = PTHREAD_RWLOCK_INITIALIZER;
+pthread_rwlock_t rw_lock;
 
 int Member(int value, struct list_node_s* head_p){
     struct list_node_s* curr_p = head_p;
@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
 
     
     double execution_times[iterations];
-    double average;
+    double average=0;
     double std=0;
     double total_exe_times=0;
     double sqrd_error_sum=0;
@@ -177,6 +177,9 @@ int main(int argc, char *argv[])
     int iter = 0;
     while (iter<iterations){
         ll_head = NULL;
+
+        pthread_rwlock_init(&rw_lock, NULL);
+
         srand(time(0));
 
         int i = 0;
@@ -211,6 +214,9 @@ int main(int argc, char *argv[])
 
         clock_gettime(CLOCK_REALTIME, &finish);
         double time_spent = (finish.tv_sec - start.tv_sec) + ((finish.tv_nsec - start.tv_nsec) / 1000000000.0);
+
+        // printf("round: %d time: %f \n", iter, time_spent);
+
 
         total_exe_times+=time_spent;
         execution_times[iter]=time_spent;

@@ -1,5 +1,5 @@
 iterations=10
-thread_count=1
+thread_count=8
 p_mem=0.99
 p_ins=0.005
 p_del=0.005
